@@ -1,16 +1,19 @@
 // IMPORTAÇÃO
 import {useState} from 'react';
-import {Text,View,TextInput,TouchableOpacity,StyleSheet} from 'react-native';
+import {Text,View} from 'react-native';
+import InputButton from './src/components/inputButton';
+import ActionButton from './src/components/actionButton';
+import ResultView from './src/components/resultView';
+import styles from './src/styles/appStyles';
 
 export default function Aplicacao(){
 
-  const [n1,setN1] = useState()
-  const [n2,setN2] = useState()
-  const [resultado,setResultado] = useState()
+  const [n1,setN1] = useState('')
+  const [n2,setN2] = useState('')
+  const [resultado,setResultado] = useState('')
 
-  // função anonima function(){console.lo('fdadf')}
   const somar = ()=>{
-    const r = parseInt(n1) + parseInt(n2)
+    const r = (parseInt(n1, 10) || 0) + (parseInt(n2, 10) || 0)
     setResultado(r)
   }
     
@@ -21,90 +24,32 @@ export default function Aplicacao(){
         <Text style={styles.titulo}> Somando dois Valores </Text>
       </View>
 
-      <View style={{margin:15}}>
-        <Text> Primeiro número: </Text>          
-        <TextInput              
-          style={styles.caixaDeTexto}
-          placeholder='Digite aqui o primeiro número'
-          placeholderTextColor='#6f6f6f'
-          autoFocus={true}
-          keyboardType={'numeric'}
+      <InputButton
+        label="Primeiro número:"
+        placeholder="Digite aqui o primeiro número"
+        value={n1}
+        autoFocus={true}
+        onChangeText={setN1}
+        inputStyle={styles.caixaDeTexto}
+      />
 
-          onChangeText = {text =>setN1(text)}
-        />            
-      </View>           
+      <InputButton
+        label="Segundo número:"
+        placeholder="Digite aqui o segundo número"
+        value={n2}
+        onChangeText={setN2}
+        inputStyle={styles.caixaDeTexto}
+      />
 
-      <View style={{margin:15}}>
-        <Text> Segundo número:  </Text>          
-        <TextInput
-          style={styles.caixaDeTexto}
-          placeholder='Digite aqui o segundo número'
-          placeholderTextColor='#6f6f6f'              
-          keyboardType={'numeric'}
-          // evento para mudar o estado da caixa de texto
-          onChangeText = {text =>setN2(text)}
-        />            
-      </View>           
+      <ActionButton
+        title="Somar"
+        onPress={somar}
+        buttonStyle={styles.botao}
+        textStyle={styles.textoBotao}
+      />
 
-      <View style={{margin:15}}>           
-
-        <TouchableOpacity 
-          style={styles.botao} 
-          onPress={()=>somar()}
-          activeOpacity={0.5}
-        >
-          <Text style={styles.textoBotao}> Somar </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{margin:15}}>
-          <Text style={styles.resposta}> Total da soma: {resultado}  </Text>
-      </View>
+      <ResultView value={resultado} textStyle={styles.resposta} />
       
     </View>
 );
 }
-
-const styles = StyleSheet.create({
-  tudo:{
-    backgroundColor:'#000',
-    height:'100%',
-    width:'100%'
-  },
-
-  titulo:{
-    color:'#d30f59',
-    fontSize:25,
-    textAlign:'center',
-    marginTop:25,
-    marginBottom:10    
-  },
-
-  caixaDeTexto:{
-    borderWidth:1,
-    borderColor:'#2f2f2f',
-    color:'#f2f2f2',
-    borderRadius:40,
-    paddingLeft: 25,
-    height:60    
-  },
-
-  botao:{
-    backgroundColor: '#d30f33ff',    
-    borderRadius: 25, 
-    paddingVertical: 15,
-    alignItems: 'center'    
-  },
-
-  textoBotao:{
-    color:'#fff',
-    fontSize:18
-  },
-
-  resposta:{
-    color:'#d30f59',
-    fontSize:25,
-    textAlign:'center',
-    marginTop:30
-  }
-});
