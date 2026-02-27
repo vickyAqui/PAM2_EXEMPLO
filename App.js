@@ -10,18 +10,25 @@ export default function Aplicacao(){
 
   const [n1,setN1] = useState('')
   const [n2,setN2] = useState('')
-  const [resultado,setResultado] = useState('')
+  const [resultado,setResultado] = useState(null)
 
-  const somar = ()=>{
-    const r = (parseInt(n1, 10) || 0) + (parseInt(n2, 10) || 0)
-    setResultado(r)
+  const calcularOperacoes = ()=>{
+    const primeiroNumero = parseFloat(n1) || 0
+    const segundoNumero = parseFloat(n2) || 0
+
+    setResultado({
+      soma: primeiroNumero + segundoNumero,
+      subtracao: primeiroNumero - segundoNumero,
+      multiplicacao: primeiroNumero * segundoNumero,
+      divisao: segundoNumero !== 0 ? primeiroNumero / segundoNumero : 'Não é possível dividir por zero'
+    })
   }
     
   return(
     <View style={styles.tudo}>
 
       <View>
-        <Text style={styles.titulo}> Somando dois Valores </Text>
+        <Text style={styles.titulo}> Operações Aritméticas </Text>
       </View>
 
       <InputButton
@@ -42,8 +49,8 @@ export default function Aplicacao(){
       />
 
       <ActionButton
-        title="Somar"
-        onPress={somar}
+        title="Calcular"
+        onPress={calcularOperacoes}
         buttonStyle={styles.botao}
         textStyle={styles.textoBotao}
       />
